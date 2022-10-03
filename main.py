@@ -4,11 +4,15 @@ join the discord  https://discord.gg/PMk4DstVka
 """
 import subprocess
 
+logf = open("error-log.txt","w")
+
 print("\033[95m\033[4m\033[1mCode by hhamzaa#9803 \njoin the discord  https://discord.gg/PMk4DstVka \033[0m")
 
 # run the netsh wlan show profiles command which gets the saved network profiles and save the output in a variable
-data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
-
+try:
+    data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
+except: subprocess.CalledProcessError as e:
+    logf.write(str(e.output))
 # create a list to store the wifi profiles
 profiles = [i.split(":")[1][1:-1] for i in data if "All User Profile" in i]
 
